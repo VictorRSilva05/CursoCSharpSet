@@ -1,11 +1,17 @@
-﻿namespace ConsoleApp26
+﻿using ConsoleApp26.Entities;
+using System.Globalization;
+using System.Text;
+namespace ConsoleApp26
 {
     internal class Program
     {
         Program()
         {
-            Console.Write("Enter file full path: "); //C:\Windows\Temp\online_users.txt
+            Console.Write("Enter file full path: ");        //C:\Windows\Temp\online_users.txt
             string path = Console.ReadLine(); 
+
+            List<Users> users = new List<Users>();
+
             try
             {
                 using (StreamReader sr = File.OpenText(path))
@@ -13,6 +19,10 @@
                     while (!sr.EndOfStream)
                     {
                         string line = sr.ReadLine();
+                        string[] data = line.Split(' ');
+                        DateTime date = DateTime.ParseExact(data[1], "yyyy-MM-ddTHH:mm:ss", CultureInfo.InvariantCulture);
+                        string username = data[0];
+                        users.Add(new Users(username, date));
                         Console.WriteLine(line);
                     }
                 }
@@ -20,6 +30,13 @@
             catch (IOException e)
             {
                 Console.WriteLine(e.Message);
+            }
+
+            SortedSet<Users> users1 = new SortedSet<Users>();
+
+            foreach (Users user in users)
+            {
+                users1.Add(user);
             }
         }
         static void Main(string[] args)
