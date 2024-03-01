@@ -10,7 +10,7 @@ namespace ConsoleApp26
             Console.Write("Enter file full path: ");        //C:\Windows\Temp\online_users.txt
             string path = Console.ReadLine(); 
 
-            List<Users> users = new List<Users>();
+            HashSet<Users> users = new HashSet<Users>();
 
             try
             {
@@ -25,6 +25,7 @@ namespace ConsoleApp26
                         users.Add(new Users(username, date));
                         Console.WriteLine(line);
                     }
+                    Console.WriteLine("\nTotal users: " + users.Count);
                 }
             }
             catch (IOException e)
@@ -32,13 +33,9 @@ namespace ConsoleApp26
                 Console.WriteLine(e.Message);
             }
 
-            SortedSet<Users> users1 = new SortedSet<Users>();
-
-            foreach (Users user in users)
-            {
-                users1.Add(user);
-            }
+ 
         }
+
         static void Main(string[] args)
         {
             _ = new Program();
